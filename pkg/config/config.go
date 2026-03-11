@@ -73,6 +73,7 @@ type ChannelsConfig struct {
 	Feishu   FeishuConfig   `json:"feishu"`
 	Discord  DiscordConfig  `json:"discord"`
 	MaixCam  MaixCamConfig  `json:"maixcam"`
+	ESP32    ESP32Config    `json:"esp32"`
 	QQ       QQConfig       `json:"qq"`
 	DingTalk DingTalkConfig `json:"dingtalk"`
 	Slack    SlackConfig    `json:"slack"`
@@ -111,6 +112,13 @@ type MaixCamConfig struct {
 	Host      string              `json:"host" env:"PICOCLAW_CHANNELS_MAIXCAM_HOST"`
 	Port      int                 `json:"port" env:"PICOCLAW_CHANNELS_MAIXCAM_PORT"`
 	AllowFrom FlexibleStringSlice `json:"allow_from" env:"PICOCLAW_CHANNELS_MAIXCAM_ALLOW_FROM"`
+}
+
+type ESP32Config struct {
+	Enabled   bool                `json:"enabled" env:"PICOCLAW_CHANNELS_ESP32_ENABLED"`
+	Host      string              `json:"host" env:"PICOCLAW_CHANNELS_ESP32_HOST"`
+	Port      int                 `json:"port" env:"PICOCLAW_CHANNELS_ESP32_PORT"`
+	AllowFrom FlexibleStringSlice `json:"allow_from" env:"PICOCLAW_CHANNELS_ESP32_ALLOW_FROM"`
 }
 
 type QQConfig struct {
@@ -225,6 +233,12 @@ func DefaultConfig() *Config {
 				Enabled:   false,
 				Host:      "0.0.0.0",
 				Port:      18790,
+				AllowFrom: FlexibleStringSlice{},
+			},
+			ESP32: ESP32Config{
+				Enabled:   false,
+				Host:      "0.0.0.0",
+				Port:      18791,
 				AllowFrom: FlexibleStringSlice{},
 			},
 			QQ: QQConfig{

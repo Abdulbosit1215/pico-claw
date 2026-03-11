@@ -111,6 +111,19 @@ func (m *Manager) initChannels() error {
 		}
 	}
 
+	if m.config.Channels.ESP32.Enabled {
+		logger.DebugC("channels", "Attempting to initialize ESP32 channel")
+		esp32, err := NewESP32Channel(m.config.Channels.ESP32, m.bus)
+		if err != nil {
+			logger.ErrorCF("channels", "Failed to initialize ESP32 channel", map[string]interface{}{
+				"error": err.Error(),
+			})
+		} else {
+			m.channels["esp32"] = esp32
+			logger.InfoC("channels", "ESP32 channel enabled successfully")
+		}
+	}
+
 	if m.config.Channels.QQ.Enabled {
 		logger.DebugC("channels", "Attempting to initialize QQ channel")
 		qq, err := NewQQChannel(m.config.Channels.QQ, m.bus)
